@@ -1,10 +1,19 @@
 <div class="container">
   <div class="widget widget-1">
-    <app-widget1></app-widget1>
+    <div class="widget-header">
+      <app-widget-header [name]="'A1. Population Statistics of Kazakhstan'"></app-widget-header>
+    </div>
+    <div class="widget-body">
+      <app-widget1></app-widget1>
+    </div>
   </div>
   <div class="widget widget-2">
-    <app-widget-header [name]="'A2. Population by regions'"></app-widget-header>
-    Widget 2
+    <div class="widget-header">
+      <app-widget-header [name]="'A2. Population by regions'"></app-widget-header>
+    </div>
+    <div class="widget-body">
+      <app-widget2></app-widget2>
+    </div>
   </div>
   <div class="widget widget-3">Widget 3</div>
   <div class="widget widget-4">Widget 4</div>
