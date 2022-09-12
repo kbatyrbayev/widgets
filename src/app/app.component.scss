@@ -3,31 +3,27 @@
   display: grid;
   gap: 15px;
   padding: 25px;
-  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-  grid-template-areas:
-    "widget1 widget2 widget3"
-    "widget6 widget2 widget4"
-    "widget6 widget5 widget4";
+  grid-template: repeat(12, 1fr) / repeat(12, 1fr);
 
   @media (max-width: 1500px) {
-    grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+/*     grid-template: repeat(2, 1fr) / repeat(2, 1fr);
     grid-template-areas:
       "widget1 widget2"
       "widget3 widget2"
       "widget4 widget4"
       "widget5 widget5"
-      "widget6 widget6";
+      "widget6 widget6"; */
   }
 
   @media (max-width: 1200px) {
-    grid-template: 1fr / 1fr;
+/*     grid-template: 1fr / 1fr;
     grid-template-areas:
       "widget1 widget1"
       "widget2 widget2"
       "widget3 widget3"
       "widget4 widget4"
       "widget5 widget5"
-      "widget6 widget6";
+      "widget6 widget6"; */
   }
 }
 
@@ -41,29 +37,29 @@
     margin-bottom: 30px;
   }
   &-body {
-    overflow: auto;
+    overflow: hidden;
   }
   &-1 {
-    grid-area: widget1;
+    grid-area: 1 / 1 / span 5/ span 4;
   }
 
   &-2 {
-    grid-area: widget2;
+    grid-area: 1 / 5 / span 8 / span 4;
   }
 
   &-3 {
-    grid-area: widget3;
+    grid-area: 1 / 9 / span 4 / span 4;
   }
 
   &-4 {
-    grid-area: widget4;
+    grid-area: 5 / 9 / span 8 / span 4;
   }
 
   &-5 {
-    grid-area: widget5;
+    grid-area: 9 / 5 / span 4 / span 4;
   }
 
   &-6 {
-    grid-area: widget6;
+    grid-area: 6 / 1 / span 8 / span 4;
   }
 }
