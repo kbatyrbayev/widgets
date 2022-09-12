@@ -1,0 +1,17 @@
+.map {
+  width: 100%;
+  height: 100%;
+}
+
+g {
+  cursor: pointer;
+  path {
+    transition: all 0.3s;
+    &:hover,
+    &.active {
+      &.area {
+        fill: rgba(26, 154, 247, 0.5);
+      }
+    }
+  }
+}
