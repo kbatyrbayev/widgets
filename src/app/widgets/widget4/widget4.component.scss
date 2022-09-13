@@ -1,0 +1,42 @@
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 5px;
+  .bar-wrapper {
+    display: flex;
+    height: 20px;
+    position: relative;
+    .male-wrapper,
+    .female-wrapper {
+      flex-grow: 1;
+      position: relative;
+      .bar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+      }
+    }
+    .male-wrapper {
+      .bar {
+        right: 0;
+        background-color: #027DDC;
+      }
+    }
+    .female-wrapper {
+      .bar {
+        left: 0;
+        background-color: #FF3366;
+        text-align: right;
+/*         display: flex;
+        justify-content: flex-end; */
+      }
+    }
+    .region {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+  }
+}

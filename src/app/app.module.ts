@@ -7,6 +7,7 @@ import { Widget1Component } from './widgets/widget1/widget1.component';
 import { WidgetHeaderComponent } from './components/widget-header/widget-header.component';
 import { Widget2Component } from './widgets/widget2/widget2.component';
 import { Widget3Component } from './widgets/widget3/widget3.component';
+import { Widget4Component } from './widgets/widget4/widget4.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { Widget3Component } from './widgets/widget3/widget3.component';
     Widget1Component,
     WidgetHeaderComponent,
     Widget2Component,
-    Widget3Component
+    Widget3Component,
+    Widget4Component
   ],
   imports: [
     BrowserModule,
