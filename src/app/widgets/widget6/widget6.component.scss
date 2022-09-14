@@ -1,0 +1,62 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  > div {
+    flex-grow: 1;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  th, td {
+    border: 1px solid #005BC5;
+    padding: 10px;
+    &:first-child {
+      text-align: center;
+    }
+  }
+  th {
+    background-color: #3B8AC2;
+    &:nth-child(1) {
+      border-radius: 5px 0 0 0;
+    }
+    &:last-child {
+      border-radius: 0 5px 0 0;
+    }
+  }
+}
+
+svg {
+  width: 200px;
+  border-radius: 50%;
+  background: #3f51b5; 
+  transform: rotate(-90deg);
+}
+svg text {
+  transform: rotate(90deg);
+  font-size:5px;
+}
+ 
+circle {
+  fill: none;
+  stroke-width: 32;
+  r: 16;
+  cx: 16;
+  cy: 16;
+}
+ 
+circle.first {
+  stroke: #00bcd4;
+ 
+}
+circle.second {
+  stroke: #ffeb3b;
+}
+  
+circle.third {
+  stroke: purple;
+}
