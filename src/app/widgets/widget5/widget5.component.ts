@@ -55,17 +55,19 @@ export class Widget5Component implements OnInit, AfterViewInit {
     c = this.canvas.nativeElement.getContext('2d')!;
 
     /* draw lines to x and y axis start */
-    c.fillStyle = "black";
-    c.lineWidth = 2;
     c.beginPath();
+    c.lineWidth = 2;
     c.moveTo(this.padding, this.padding);
     c.lineTo(this.padding, this.height - this.padding);
     c.lineTo(this.width - this.padding, this.height - this.padding);
+    c.strokeStyle = '#fff';
     c.stroke(); 
+    c.closePath();
     /* draw lines to x and y axis end */
 
 
     /* draw text and vertical small lines for horizontal line  start */
+    c.beginPath();
     const values = new Set();
     this.data.forEach(r => {
       values.add(Math.floor(r.value/1000000))
@@ -75,6 +77,7 @@ export class Widget5Component implements OnInit, AfterViewInit {
     const newValues = Array.from(values).reverse();
     for (let i = 0; i < newValues.length; i++) {
       c.font='bold 10px Arial';
+      c.fillStyle = '#fff';
       c.fillText(newValues[i]+'M', 2, i * this.xStep+this.padding+10);//+10 это отступ для текста
       c.lineWidth = 2;
       c.beginPath();
@@ -93,24 +96,45 @@ export class Widget5Component implements OnInit, AfterViewInit {
       c.moveTo(i*this.yStep+this.padding+7, this.height-this.padding-5);
       c.lineTo(i*this.yStep+this.padding+7, this.height-this.padding+5);
       c.stroke();
+      c.closePath();
     }
     /* drat text and horizontal small lines for x(main) axis line end*/
 
 
-    /* draw line by x and y start*/
-    console.log(this.data)
+    /* draw line chart by x and y start*/
     c.beginPath();
-    c.moveTo(this.yStep, 2 * this.xStep + this.padding + 7); // 2 from array [19, 18, 17], index of 17
-    for(let i = 1; i < this.data.length; i++) {
+    for(let i = 0; i < this.data.length; i++) {
       let item = this.data[i];
       let index = newValues.findIndex(f => f === item.val);
-      console.log(item, 'item', index);
-      
-      c.lineTo(i*20, 50)
+      c.lineTo(i*this.yStep+this.yStep, index * this.xStep + this.padding + 7);
+      c.strokeStyle = '#2BA2FC';
+      c.stroke();
+      c.beginPath();  
+      c.arc(i*this.yStep+this.yStep, index * this.xStep + this.padding + 7, 1.5, 0, 2 * Math.PI);
+      c.fillStyle = '#2BA2FC';
+      c.fill();
     }
-    c.stroke();
-
     /* draw line by x and y end*/
+
+    /* hover start */
+
+    const offset = this.canvas.nativeElement.getBoundingClientRect();
+
+/*     this.canvas.nativeElement.onmousemove = function(event) {
+      handleMouseMove(event)
+    } */
+    /* hover end */
+
+    function handleMouseMove(e: MouseEvent) {
+      e.preventDefault();
+      e.stopPropagation();
+      // console.log(e);
+
+      let mouseX = e.clientX - offset.x;
+      let mouseY = e.clientY - offset.y;
+
+      console.log(mouseX, mouseY)
+  }
 
   }
 
