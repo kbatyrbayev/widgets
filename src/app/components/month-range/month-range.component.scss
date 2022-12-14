@@ -1,0 +1,15 @@
+.ranges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 15px;
+  .range {
+    cursor: pointer;
+    color: var(--text-color);
+    border-bottom: 2px solid transparent;
+    transition: all .3s ease-in-out;
+    &.active {
+      border-bottom-color: var(--text-color);
+    }
+  }
+}

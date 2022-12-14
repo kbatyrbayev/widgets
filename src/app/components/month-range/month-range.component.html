@@ -1,0 +1,5 @@
+<div class="ranges">
+  <div class="range" *ngFor="let range of ranges" (click)="selectRange(range)" [class.active]="range.value === activeRange.value">
+    {{range.display}}
+  </div>
+</div>

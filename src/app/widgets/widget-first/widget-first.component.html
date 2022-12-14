@@ -1,0 +1,17 @@
+<div class="widget">
+  <app-widget-header [name]="'Analytics on apartment prices by regions'"></app-widget-header>
+  <div class="widget__body">
+    <div class="cards">
+      <div class="card" *ngFor="let card of [0,1,2]">
+        <div>Astana</div>
+        <div>〒 483 200</div>
+      </div>
+    </div>
+    <div class="map-wrapper">
+      <app-month-range></app-month-range>
+      <div class="map-wrapper__inner">
+        <app-map></app-map>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+.widget {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &__body {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    gap: 20px;
+  }
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  .card {
+    flex: 1;
+    padding: 10px 50px;
+    background: rgb(40, 42, 66);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,25%);
+  }
+}
+
+.map-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  &__inner {
+    text-align: center;
+  }
+}
