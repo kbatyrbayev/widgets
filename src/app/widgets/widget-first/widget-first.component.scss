@@ -1,15 +1,4 @@
-.widget {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  &__body {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    padding-top: 10px;
-    gap: 20px;
-  }
-}
+@import "../../shared/custom-styles/widget";
 
 .cards {
   display: flex;

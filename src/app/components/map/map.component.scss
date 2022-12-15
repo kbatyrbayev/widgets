@@ -7,6 +7,25 @@ svg {
   max-height: 100%;
 }
 
+g {
+  cursor: pointer;
+  user-select: none;
+}
+
+text {
+  font-size: 0.8rem;
+}
+
+.active {
+  path {
+    transition: all .3s ease-in-out;
+    fill: #3B8AC2;
+  }
+  text {
+    fill: #fff;
+  }
+}
+
 
 @media (max-width: 1460px) {
   svg {

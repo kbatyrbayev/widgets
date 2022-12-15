@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 15px;
+  user-select: none;
   .range {
     cursor: pointer;
     color: var(--text-color);

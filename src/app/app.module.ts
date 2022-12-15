@@ -16,6 +16,7 @@ import { WidgetThirdComponent } from './widgets/widget-third/widget-third.compon
 import { WidgetFourthComponent } from './widgets/widget-fourth/widget-fourth.component';
 import { MapComponent } from './components/map/map.component';
 import { MonthRangeComponent } from './components/month-range/month-range.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { MonthRangeComponent } from './components/month-range/month-range.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

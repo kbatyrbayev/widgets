@@ -1,0 +1,7 @@
+{
+  "/ajax": {
+    "target": "https://krisha.kz",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
