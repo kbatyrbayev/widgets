@@ -1,9 +1,10 @@
+$value: calc(50% - 10px);
 .widgets {
   height: 100%;
   padding: 20px;
   display: grid;
-  grid-template-rows: 50% 50%;
-  grid-template-columns: 50% 50%;
+  grid-template-rows: $value $value;
+  grid-template-columns: $value $value;
   gap: 20px;
   .widget {
     border-radius: 10px;

@@ -5,9 +5,17 @@
 
   &__body {
     flex: 1;
-    display: flex;
-    justify-content: space-between;
     padding-top: 10px;
     gap: 20px;
+    margin-top: 20px;
+
+    &--flex {
+      display: flex;
+    }
+
+    &--jc-sb {
+      justify-content: space-between;
+    }
   }
+
 }

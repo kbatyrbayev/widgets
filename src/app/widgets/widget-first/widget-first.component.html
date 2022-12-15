@@ -1,12 +1,12 @@
 <div class="widget">
   <app-widget-header [name]="'Analytics on apartment prices by regions'"></app-widget-header>
-  <div class="widget__body">
+  <div class="widget__body widget__body--flex widget__body--jc-sb">
     <div class="loading" *ngIf="loading">loading</div>
     <ng-container *ngIf="!loading">
       <div class="cards">
-        <div class="card" *ngFor="let card of [0,1,2]">
-          <div>Astana</div>
-          <div>〒 483 200</div>
+        <div class="card" *ngFor="let card of cards">
+          <div>{{card.geo_title}}</div>
+          <div>〒 {{card.average_kzt}}</div>
         </div>
       </div>
       <div class="map-wrapper">
