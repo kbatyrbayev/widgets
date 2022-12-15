@@ -1,1 +1,12 @@
-<p>widget-third works!</p>
+<div class="widget">
+  <app-widget-header [name]="'Analytics on apartment prices by Almaty by types of house'"></app-widget-header>
+  <div class="widget__body third-widget__body">
+    <ul class="list">
+      <li *ngFor="let type of types" class="list__item">
+        <div class="list__item__title">{{type.name}}</div>
+        <div class="list__item__value">{{type.value}} тг./м2</div>
+      </li>
+    </ul>
+    <app-donut></app-donut>
+  </div>
+</div>

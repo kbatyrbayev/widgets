@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-widget-fourth',
   template: `
     <div class="widget">
-      <app-widget-header [name]="'Information about project'"></app-widget-header>
+      <app-widget-header [name]="'About project'"></app-widget-header>
       <div class="widget__body widget__body--flex">
         <img class="icon" src="./assets/info-icon.svg" alt="info-icon">
         <div class="texts">

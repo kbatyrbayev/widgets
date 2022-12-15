@@ -1,0 +1,25 @@
+@import "../../shared/custom-styles/widget";
+
+.third-widget__body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list {
+  list-style: none;
+  display: inline-block;
+  margin-right: 50px;
+
+  &__item {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr 1fr;
+    padding: 5px;
+    border-bottom: 1px solid rgba(234, 234, 255, 0.79);
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+  }
+}

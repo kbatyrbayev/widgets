@@ -11,6 +11,7 @@ import {WidgetFourthComponent} from './widgets/widget-fourth/widget-fourth.compo
 import {MapComponent} from './components/map/map.component';
 import {MonthRangeComponent} from './components/month-range/month-range.component';
 import {HttpClientModule} from "@angular/common/http";
+import { DonutComponent } from './components/donut/donut.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {HttpClientModule} from "@angular/common/http";
     WidgetThirdComponent,
     WidgetFourthComponent,
     MapComponent,
-    MonthRangeComponent
+    MonthRangeComponent,
+    DonutComponent
   ],
   imports: [
     BrowserModule,
