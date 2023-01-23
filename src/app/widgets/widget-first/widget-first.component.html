@@ -1,16 +1,16 @@
 <div class="widget">
   <app-widget-header [name]="'Analytics on apartment prices by regions'"></app-widget-header>
-  <div class="widget__body widget__body--flex widget__body--jc-sb">
+  <div class="widget__body widget__body--flex widget__body--jc-sb widget__body--sm-fd-col">
     <div class="loading" *ngIf="loading">loading</div>
     <ng-container *ngIf="!loading">
-      <div class="cards">
+      <div class="cards cards--sm">
         <div class="card" *ngFor="let card of cards">
           <div>{{card.geo_title}}</div>
-          <div>〒 {{card.average_kzt}}</div>
+          <div>〒 {{card.average_kzt | number}}</div>
         </div>
       </div>
       <div class="map-wrapper">
-        <app-month-range></app-month-range>
+        <app-month-range (selectedRange)="getSelectedRange($event)"></app-month-range>
         <div class="map-wrapper__inner">
           <app-map [data]="mapData" (selectedRegionId)="getSelectedRegionId($event)"></app-map>
         </div>

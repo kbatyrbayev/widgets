@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  gap: 10px;
 
   &__body {
     flex: 1;
-    padding-top: 10px;
     gap: 20px;
-    margin-top: 20px;
 
     &--flex {
       display: flex;
@@ -16,7 +15,10 @@
     &--jc-sb {
       justify-content: space-between;
     }
-
+    &--sm-fd-col {
+      @media (max-width: 575px) {
+        flex-direction: column;
+      }
+    }
   }
-
 }

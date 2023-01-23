@@ -12,6 +12,7 @@ import {MapComponent} from './components/map/map.component';
 import {MonthRangeComponent} from './components/month-range/month-range.component';
 import {HttpClientModule} from "@angular/common/http";
 import { DonutComponent } from './components/donut/donut.component';
+import {DecimalPipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { DonutComponent } from './components/donut/donut.component';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    DecimalPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

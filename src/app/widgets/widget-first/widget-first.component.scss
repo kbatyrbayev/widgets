@@ -5,9 +5,9 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
+  width: 20%;
   .card {
     flex: 1;
-    padding: 10px 50px;
     background: rgb(40, 42, 66);
     border-radius: 8px;
     display: flex;
@@ -17,6 +17,13 @@
     text-align: center;
     gap: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,25%);
+    padding: 5px;
+  }
+  &--sm {
+    @media (max-width: 575px) {
+      flex-direction: row;
+      width: 100%;
+    }
   }
 }
 

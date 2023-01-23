@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-month-range',
@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MonthRangeComponent implements OnInit {
 
+  @Output() selectedRange = new EventEmitter<number>();
+
   ranges:IRange[] = [
     {value: 1, display: '1M'},
     {value: 2, display: '2M'},
     {value: 6, display: '6M'},
-    {value: null, display: 'All time'},
+    {value: -1, display: 'All time'},
   ];
   activeRange: IRange;
 
@@ -23,11 +25,12 @@ export class MonthRangeComponent implements OnInit {
   }
   selectRange(range: IRange) {
     this.activeRange = range;
+    this.selectedRange.emit(range.value);
   }
 
 }
 
 interface IRange {
-  value: number | null;
+  value: number;
   display: string;
 }

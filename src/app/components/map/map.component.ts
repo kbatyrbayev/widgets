@@ -1,19 +1,29 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 import {IRegionEx} from "../../widgets/widget-first/widget-first.component";
+import {DecimalPipe} from "@angular/common";
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit, AfterViewInit {
 
-  @ViewChildren('region') regions!: QueryList<any>;
+  @ViewChildren('region') regions!: QueryList<ElementRef>;
   @Input() data: IRegionEx[] = [];
   @Output() selectedRegionId = new EventEmitter<number>();
   currentRegionId = 2;
-  isOutsideClick = false;
-  constructor() { }
+  constructor(private decimalPipe: DecimalPipe) { }
 
   ngOnInit(): void {
     this.currentRegionId && this.selectedRegionId.emit(this.currentRegionId);
@@ -24,22 +34,20 @@ export class MapComponent implements OnInit, AfterViewInit {
       const id = +region.nativeElement.getAttribute('id');
       const item = this.data.find(f => f.geo === id);
       if (item) {
-        region.nativeElement.getElementsByClassName('value')[0].textContent = item.average_kzt;
+        region.nativeElement.getElementsByClassName('value')[0].textContent = this.decimalPipe.transform(item.average_kzt);
+        region.nativeElement.getElementsByClassName('city')[0].textContent = item.geo_title;
       }
     });
   }
 
   selectRegion(target: any) {
-    this.isOutsideClick = true;
-    for (let i = 0; i < target.path.length; i++) {
-      const item = target.path[i];
-      if (typeof item.getAttribute !== "undefined" && item.getAttribute('id')) {
-        this.currentRegionId = +item.getAttribute('id');
-        this.isOutsideClick = false;
-        break;
-      }
+    let id: number;
+    if (target && target.parentNode) {
+      id = +target.parentNode.getAttribute('id');
+      this.currentRegionId = id;
+      this.selectedRegionId.emit(this.currentRegionId);
     }
-    !this.isOutsideClick && this.selectedRegionId.emit(this.currentRegionId);
+
   }
 
 }
