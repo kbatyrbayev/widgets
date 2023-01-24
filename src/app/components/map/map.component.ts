@@ -9,8 +9,8 @@ import {
   QueryList,
   ViewChildren
 } from '@angular/core';
-import {IRegionEx} from "../../widgets/widget-first/widget-first.component";
 import {DecimalPipe} from "@angular/common";
+import {IRegionInfo} from "../../shared/models/model";
 
 @Component({
   selector: 'app-map',
@@ -20,7 +20,7 @@ import {DecimalPipe} from "@angular/common";
 export class MapComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('region') regions!: QueryList<ElementRef>;
-  @Input() data: IRegionEx[] = [];
+  @Input() data: IRegionInfo[] = [];
   @Output() selectedRegionId = new EventEmitter<number>();
   currentRegionId = 2;
   constructor(private decimalPipe: DecimalPipe) { }
@@ -47,7 +47,6 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.currentRegionId = id;
       this.selectedRegionId.emit(this.currentRegionId);
     }
-
   }
 
 }

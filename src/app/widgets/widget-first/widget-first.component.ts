@@ -11,10 +11,9 @@ import {finalize} from "rxjs";
 export class WidgetFirstComponent implements OnInit {
 
   data: IRegionInfo[] = [];
-  mapData: IRegionEx[] = [];
   loading = true;
   mainCitiesIds = [105, 2, 278]; // Astana, Almaty, Shymkent
-  cards: IRegionEx[] = [];
+  cards: IRegionInfo[] = [];
 
   constructor(private service: KrishaService) {
   }
@@ -29,45 +28,14 @@ export class WidgetFirstComponent implements OnInit {
         })
       )
       .subscribe(res => {
-        /* prepare data to map component */
-        this.mapData = res.map(item => {
-          return {
-            id: item.id,
-            avg: item.avg,
-            name: this.service.getCitiesOnEnglishById(item.id)
-          }
-        });
-
+        this.data = res;
         /* mapping data to cards */
-        this.cards = this.mainCitiesIds.map(cityId => {
-          const item = this.mapData.find(f => f.id === cityId);
-          return {
-            id: cityId,
-            name: this.service.getCitiesOnEnglishById(cityId),
-            avg: item?.avg || 0
-          }
-        });
+        this.cards = this.data.filter(f => this.mainCitiesIds.includes(f.id));
       });
   }
 
   getSelectedRegionId(id: number) {
-    console.log(id, 'id from map component');
+    this.service.setRegion(this.data.find(f => f.id === id));
   }
 
-  getSelectedRange(value: number) {
-    console.log(value, 'selected range')
-  }
-
-  getYearMonth(date: string): string {
-    const newDate = new Date(date);
-    return newDate.getFullYear() + '-' + (newDate.getMonth() + 1);
-  }
-
-
-}
-
-export interface IRegionEx {
-  id: number;
-  avg: number;
-  name: string;
 }

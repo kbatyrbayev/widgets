@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {map, Observable} from "rxjs";
-import {IRegion, IRegionInfo, IRegionInfoData} from "../models/model";
+import {BehaviorSubject, map, Observable} from "rxjs";
+import {IRegion, IRegionInfo} from "../models/model";
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,9 @@ export class KrishaService {
     [278, 'Shymkent']
   ]);
 
+  private region$ = new BehaviorSubject<IRegionInfo>({id: 0, avg: 0, data: {x:[], y:[]}, name: ''});
+  selectedRegion$ = this.region$.asObservable();
+
   constructor(private http: HttpClient) {
   }
 
@@ -39,16 +42,16 @@ export class KrishaService {
             id: +key,
             avg: item.avg,
             data: item.data,
-            name: item.name
-          })
+            name: this.cities.get(+key) || ''
+          });
         }
         return arr;
       })
     );
   }
 
-  getCitiesOnEnglishById(id: number): string {
-    return this.cities.get(id) || '';
+  setRegion(region: IRegionInfo | any) {
+    this.region$.next(region);
   }
 
 }

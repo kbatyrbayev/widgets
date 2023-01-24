@@ -1,5 +1,5 @@
 export interface IRegion {
-  [key: number]: IRegionInfoData[]
+  [key: number]: IRegionInfo;
 }
 
 export interface IRegionInfo {
