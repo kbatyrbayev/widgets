@@ -5,15 +5,12 @@
     <ng-container *ngIf="!loading">
       <div class="cards cards--sm">
         <div class="card" *ngFor="let card of cards">
-          <div>{{card.geo_title}}</div>
-          <div>〒 {{card.average_kzt | number}}</div>
+          <div>{{card.name}}</div>
+          <div>〒 {{card.avg | number}}</div>
         </div>
       </div>
       <div class="map-wrapper">
-        <app-month-range (selectedRange)="getSelectedRange($event)"></app-month-range>
-        <div class="map-wrapper__inner">
           <app-map [data]="mapData" (selectedRegionId)="getSelectedRegionId($event)"></app-map>
-        </div>
       </div>
     </ng-container>
 

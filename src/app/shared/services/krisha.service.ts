@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {IRegionInfo} from "../models/model";
+import {map, Observable} from "rxjs";
+import {IRegion, IRegionInfo, IRegionInfoData} from "../models/model";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,21 @@ export class KrishaService {
   }
 
   getAnalytics(): Observable<IRegionInfo[]> {
-    return this.http.get<IRegionInfo[]>('/ajax/analytics');
+    return this.http.get<IRegion>('/analytics/').pipe(
+      map(res => {
+        let arr: IRegionInfo[] = [];
+        for(let key in res) {
+          let item = res[key] as unknown as IRegionInfo;
+          arr.push({
+            id: +key,
+            avg: item.avg,
+            data: item.data,
+            name: item.name
+          })
+        }
+        return arr;
+      })
+    );
   }
 
   getCitiesOnEnglishById(id: number): string {

@@ -32,10 +32,10 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.regions.forEach(region => {
       const id = +region.nativeElement.getAttribute('id');
-      const item = this.data.find(f => f.geo === id);
+      const item = this.data.find(f => f.id === id);
       if (item) {
-        region.nativeElement.getElementsByClassName('value')[0].textContent = this.decimalPipe.transform(item.average_kzt);
-        region.nativeElement.getElementsByClassName('city')[0].textContent = item.geo_title;
+        region.nativeElement.getElementsByClassName('value')[0].textContent = this.decimalPipe.transform(item.avg);
+        region.nativeElement.getElementsByClassName('city')[0].textContent = item.name;
       }
     });
   }

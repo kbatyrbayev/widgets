@@ -30,27 +30,21 @@ export class WidgetFirstComponent implements OnInit {
       )
       .subscribe(res => {
         /* prepare data to map component */
-        this.mapData = [];
-        this.data = res;
-        console.log(this.data)
-        /* sorting data, then to find last city */
-        const data = this.data.sort((a, b) => new Date(b.last_updated).getTime() - new Date(a.last_updated).getTime());
-        for(let entry of this.service.cities.entries()) {
-          const item = data.find(f => f.geo === entry[0]);
-          this.mapData.push({
-            geo: entry[0],
-            geo_title: entry[1],
-            average_kzt: item ? item.average_kzt : 0
-          });
-        }
+        this.mapData = res.map(item => {
+          return {
+            id: item.id,
+            avg: item.avg,
+            name: this.service.getCitiesOnEnglishById(item.id)
+          }
+        });
 
         /* mapping data to cards */
         this.cards = this.mainCitiesIds.map(cityId => {
-          const item = this.mapData.find(f => f.geo === cityId);
+          const item = this.mapData.find(f => f.id === cityId);
           return {
-            geo: cityId,
-            geo_title: this.service.getCitiesOnEnglishById(cityId),
-            average_kzt: item?.average_kzt || 0
+            id: cityId,
+            name: this.service.getCitiesOnEnglishById(cityId),
+            avg: item?.avg || 0
           }
         });
       });
@@ -64,10 +58,16 @@ export class WidgetFirstComponent implements OnInit {
     console.log(value, 'selected range')
   }
 
+  getYearMonth(date: string): string {
+    const newDate = new Date(date);
+    return newDate.getFullYear() + '-' + (newDate.getMonth() + 1);
+  }
+
+
 }
 
 export interface IRegionEx {
-  geo: number;
-  geo_title: string;
-  average_kzt: number;
+  id: number;
+  avg: number;
+  name: string;
 }
