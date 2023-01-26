@@ -3,16 +3,29 @@
   <div class="widget__body">
     <svg #svgChart>
       <g class="y-axis" [attr.transform]="'translate('+padding[0]+','+padding[1]+')'">
-        <ng-container *ngFor="let y of yAxis; let i=index;">
-          <text x="0" [attr.y]="i*yStep" text-anchor="end">{{y}}</text>
-          <line [attr.x1]="10" [attr.x2]="svgWidth-padding[0]" [attr.y1]="i*yStep" [attr.y2]="i*yStep" stroke="black"></line>
+        <ng-container *ngFor="let y of yAxisLast;">
+          <text x="0" [attr.y]="y[1]" text-anchor="end">{{y[0]}}</text>
+          <line [attr.x1]="0" [attr.x2]="svgWidth-padding[0]" [attr.y1]="y[1]" [attr.y2]="y[1]" stroke="black"></line>
         </ng-container>
       </g>
+
       <g class="x-axis" [attr.transform]="'translate('+padding[0]+','+0+')'">
         <ng-container *ngFor="let x of xAxis; let i = index;">
-          <text [attr.x]="i*xStep" [attr.y]="svgHeight" >{{x}}</text>
+          <text [attr.x]="i*xStep" [attr.y]="svgHeight-10" >{{x}}</text>
         </ng-container>
       </g>
+
+      <g class="circles" [attr.transform]="'translate('+padding[0]+','+padding[1]+')'">
+        <ng-container *ngFor="let point of points; let i = index;">
+          <circle [attr.cx]="point[0]" [attr.cy]="point[1]" r="2" [attr.fill]="i === 0 || (i === points.length-1)?'red':'green'"/>
+        </ng-container>
+      </g>
+
+      <!--
+      make line with polyline
+      make dots with circle
+      make polygon with polygon
+      -->
     </svg>
   </div>
 </div>

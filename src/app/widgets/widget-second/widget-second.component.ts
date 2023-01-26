@@ -19,6 +19,13 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
   padding = [60, 30];
 
   xAxis: string[] = [];
+  maxY: number = 0;
+  minY: number = 0;
+  minX: number = 0;
+  maxX: number = 0;
+  yAxisLast: number[][] = [];
+
+  points: number[][] = [];
 
   constructor(private service: KrishaService) {
   }
@@ -31,38 +38,47 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
     this.service.selectedRegion$.subscribe(res => {
       if (res.id) {
         this.region = res;
-        this.drawChart();
+        setTimeout(() => {
+          this.drawChart();
+        }, 1000)
+
       }
     });
   }
 
   drawChart() {
     const {x, y} = this.region.data;
-    /*prepare y axis*/
+    /*create y axis*/
     this.yAxis = this.drawYAxis(y);
     this.svgHeight = this.svgChart.nativeElement.clientHeight;
-    this.yStep = this.svgHeight / this.yAxis.length;
-    /*prepare x axis*/
+    this.yStep = Math.round((this.svgHeight) / this.yAxis.length);
+    /*create x axis*/
     this.xAxis = this.drawXAxis(x);
-    console.log(this.xAxis)
     this.svgWidth = this.svgChart.nativeElement.clientWidth;
-    this.xStep =  (this.svgWidth-this.padding[0]) / this.xAxis.length;
+    this.xStep =  Math.round((this.svgWidth-this.padding[0]) / this.xAxis.length);
+    /*create dots*/
+    this.drawDots(x, y);
+    this.yAxisLast = this.yAxis.map(r => [r, this.getY(r)]);
   }
 
   drawYAxis(y: number[]) {
 
-    return getYAxis(getClosestMaxNumber(), getClosestMinNumber())
+    this.maxY = getClosestMaxNumber();
+    this.minY = getClosestMinNumber();
+    return getYAxis(this.maxY, this.minY);
 
     function getClosestMaxNumber() {
       const max = Math.max(...y);
-      const val = Number('1' + Array(String(max).length - 1).fill(0).join(''));
-      return Math.round((max + val) / 50) * 50
+      return max;
+      const val = Number('1' + Array(String(max).length - 2).fill(0).join(''));
+      return Math.round((max + val));
     }
 
     function getClosestMinNumber() {
       const min = Math.min(...y);
-      const val = Number('1' + Array(String(min).length - 1).fill(0).join(''));
-      return Math.round((min - val) / 50) * 50
+      return min;
+      const val = Number('1' + Array(String(min).length - 2).fill(0).join(''));
+      return Math.max((Math.round((min - val) / 50) * 50), 0);
     }
 
     function getYAxis(max: number, min: number) {
@@ -75,13 +91,42 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
   }
 
   drawXAxis(x: string[]) {
+    this.minX = getFirstDayOfMonth(x[0]).getTime();
+    this.maxX = getLastDayOfMonth(x[x.length-1]).getTime();
     return Array.from(new Set(x.map(r => getYearMonth(r))));
 
     function getYearMonth(date: string) {
       const newDate = new Date(date);
       const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      return `${newDate.getFullYear()} ${months[newDate.getMonth()].substring(0, 3)}`;
+      return `${newDate.getFullYear()} ${months[newDate.getMonth()].substring(0, 3).toUpperCase()}`;
     }
+
+    function getFirstDayOfMonth(date: string) {
+      const newDate = new Date(date);
+      return new Date(newDate.getFullYear(), newDate.getMonth(), 1);
+    }
+    function getLastDayOfMonth(date: string) {
+      const newDate = new Date(date);
+      return new Date(newDate.getFullYear(), newDate.getMonth()+1, 0);
+    }
+  }
+
+  drawDots(x: string[], y: number[]) {
+    let points: number[][] = [];
+    for(let i = 0; i < x.length; i++) {
+      points.push([this.getX(new Date(x[i]).getTime()), this.getY(y[i])]);
+    }
+    this.points = points;
+  }
+
+  getX(value: number) {
+    let svgWidth = this.svgWidth - this.padding[0];
+    return Math.round(svgWidth - (this.maxX-value) / (this.maxX - this.minX) * svgWidth);
+  }
+
+  getY(value: number) {
+    const svgHeight = this.svgHeight - this.padding[0];
+    return Math.round((this.maxY-value) / (this.maxY-this.minY) * svgHeight);
   }
 
   get regionName() {
