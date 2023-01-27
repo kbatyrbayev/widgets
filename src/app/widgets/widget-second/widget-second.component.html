@@ -4,28 +4,44 @@
     <svg #svgChart>
       <g class="y-axis" [attr.transform]="'translate('+padding[0]+','+padding[1]+')'">
         <ng-container *ngFor="let y of yAxisLast;">
-          <text x="0" [attr.y]="y[1]" text-anchor="end">{{y[0]}}</text>
+          <text x="0" [attr.y]="y[1]" text-anchor="end">{{y[0] | number}}</text>
           <line [attr.x1]="0" [attr.x2]="svgWidth-padding[0]" [attr.y1]="y[1]" [attr.y2]="y[1]" stroke="black"></line>
         </ng-container>
       </g>
 
       <g class="x-axis" [attr.transform]="'translate('+padding[0]+','+0+')'">
         <ng-container *ngFor="let x of xAxis; let i = index;">
-          <text [attr.x]="i*xStep" [attr.y]="svgHeight-10" >{{x}}</text>
+          <text [attr.x]="i*xStep" [attr.y]="svgHeight-10">{{x}}</text>
         </ng-container>
+      </g>
+
+      <g class="line" [attr.transform]="'translate('+padding[0]+','+padding[1]+')'">
+        <polyline [attr.points]="polyline" fill="none" stroke="#666CFF" stroke-width="2"/>
+      </g>
+
+      <g [attr.transform]="'translate('+padding[0]+','+padding[1]+')'">
+        <polygon [attr.points]="polygon"/>
       </g>
 
       <g class="circles" [attr.transform]="'translate('+padding[0]+','+padding[1]+')'">
-        <ng-container *ngFor="let point of points; let i = index;">
-          <circle [attr.cx]="point[0]" [attr.cy]="point[1]" r="2" [attr.fill]="i === 0 || (i === points.length-1)?'red':'green'"/>
+        <ng-container *ngFor="let point of pointsEx; let i = index;">
+          <!--<circle [attr.cx]="point[0]" [attr.cy]="point[1]" r="2"/>-->
+          <rect class="rect-tooltip" [attr.x]="point[0]" [attr.y]="0" [attr.width]="svgWidth/points.length" [attr.height]="svgHeight"
+                (mousemove)="mousemove($event, i)"></rect>
         </ng-container>
       </g>
 
-      <!--
-      make line with polyline
-      make dots with circle
-      make polygon with polygon
-      -->
+      <g class="tooltip" [attr.transform]="'translate('+(tooltip.x ? tooltip.x-10 : 0)+','+5+')'">
+        <rect x="0" y="0" rx="2" ry="2" width="70" height="40" class="tooltip" />
+        <text x="35" y="15" alignment-baseline="middle" text-anchor="middle">
+          {{tooltip.date}}
+        </text>
+        <text x="35" y="30" alignment-baseline="middle" text-anchor="middle">
+          {{tooltip.value | number}}
+        </text>
+        <line x1="70" x2="70" y1="0" [attr.y2]="svgHeight-padding[1]-5"></line>
+      </g>
+
     </svg>
   </div>
 </div>

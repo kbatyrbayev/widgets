@@ -26,6 +26,10 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
   yAxisLast: number[][] = [];
 
   points: number[][] = [];
+  pointsEx: number[][] = [];
+  polyline: string = '';
+  polygon: string = '';
+  tooltip:{x?: number, y?: number, date?: string, value?: number} = {}
 
   constructor(private service: KrishaService) {
   }
@@ -55,9 +59,21 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
     /*create x axis*/
     this.xAxis = this.drawXAxis(x);
     this.svgWidth = this.svgChart.nativeElement.clientWidth;
+    console.log(this.svgWidth, 'width')
     this.xStep =  Math.round((this.svgWidth-this.padding[0]) / this.xAxis.length);
     /*create dots*/
-    this.drawDots(x, y);
+    this.points = this.drawDots(x, y);
+    this.pointsEx = this.points.map(point => point.slice(0,2));
+    console.log(this.points)
+    const lastPoint = this.points[this.points.length-1];
+    this.tooltip = {
+      x: lastPoint[0],
+      y: lastPoint[1],
+      date: lastPoint[2]+'',
+      value: lastPoint[3]
+    }
+    this.polyline = this.pointsEx.map(point => point.join(',')).join(' ');
+    this.polygon = `${this.pointsEx[0][0]},${this.getY(this.minY)} ${this.polyline} ${this.pointsEx[this.pointsEx.length-1][0]},${this.getY(this.minY)}`;
     this.yAxisLast = this.yAxis.map(r => [r, this.getY(r)]);
   }
 
@@ -69,14 +85,14 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
 
     function getClosestMaxNumber() {
       const max = Math.max(...y);
-      return max;
+      //return max;
       const val = Number('1' + Array(String(max).length - 2).fill(0).join(''));
       return Math.round((max + val));
     }
 
     function getClosestMinNumber() {
       const min = Math.min(...y);
-      return min;
+      //return min;
       const val = Number('1' + Array(String(min).length - 2).fill(0).join(''));
       return Math.max((Math.round((min - val) / 50) * 50), 0);
     }
@@ -112,11 +128,12 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
   }
 
   drawDots(x: string[], y: number[]) {
-    let points: number[][] = [];
+    let points: any[][] = [];
     for(let i = 0; i < x.length; i++) {
-      points.push([this.getX(new Date(x[i]).getTime()), this.getY(y[i])]);
+      points.push([this.getX(new Date(x[i]).getTime()), this.getY(y[i]), x[i], y[i]]);
     }
-    this.points = points;
+    console.log(points)
+    return points;
   }
 
   getX(value: number) {
@@ -131,6 +148,18 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
 
   get regionName() {
     return this.region ? this.region.name : '...';
+  }
+
+
+  mousemove($event: any, index: number) {
+    console.log($event, this.points[index]);
+    const point = this.points[index];
+    this.tooltip = {
+      x: point[0],
+      y: point[1],
+      date: point[2]+'',
+      value: point[3]
+    }
   }
 
 }
