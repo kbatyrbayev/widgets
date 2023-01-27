@@ -59,12 +59,10 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
     /*create x axis*/
     this.xAxis = this.drawXAxis(x);
     this.svgWidth = this.svgChart.nativeElement.clientWidth;
-    console.log(this.svgWidth, 'width')
     this.xStep =  Math.round((this.svgWidth-this.padding[0]) / this.xAxis.length);
     /*create dots*/
     this.points = this.drawDots(x, y);
     this.pointsEx = this.points.map(point => point.slice(0,2));
-    console.log(this.points)
     const lastPoint = this.points[this.points.length-1];
     this.tooltip = {
       x: lastPoint[0],
@@ -132,7 +130,6 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
     for(let i = 0; i < x.length; i++) {
       points.push([this.getX(new Date(x[i]).getTime()), this.getY(y[i]), x[i], y[i]]);
     }
-    console.log(points)
     return points;
   }
 
@@ -152,7 +149,6 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
 
 
   mousemove($event: any, index: number) {
-    console.log($event, this.points[index]);
     const point = this.points[index];
     this.tooltip = {
       x: point[0],
