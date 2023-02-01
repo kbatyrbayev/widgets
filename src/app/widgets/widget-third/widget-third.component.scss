@@ -23,3 +23,34 @@
     }
   }
 }
+
+.bar-chart {
+  width: 100%;
+  height: 100%;
+  gap: 3px;
+  display: grid;
+}
+
+.row {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  column-gap: 3px;
+}
+
+.name, .percent {
+  display: flex;
+  align-items: center;
+}
+
+.bar {
+  &-line {
+    height: 100%;
+    background: #EAEAFF;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    color: #282A42;
+    transition: all 5s ease-in-out;
+  }
+}

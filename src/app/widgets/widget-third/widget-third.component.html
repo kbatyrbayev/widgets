@@ -1,12 +1,18 @@
 <div class="widget">
   <app-widget-header [name]="'Analytics on apartment prices by Almaty by types of house'"></app-widget-header>
   <div class="widget__body third-widget__body">
-    <ul class="list">
-      <li *ngFor="let type of types" class="list__item">
-        <div class="list__item__title">{{type.name}}</div>
-        <div class="list__item__value">{{type.value}} тг./м2</div>
-      </li>
-    </ul>
-    <app-donut></app-donut>
+
+    <div class="bar-chart" #barChart>
+      <div class="row" *ngFor="let region of regionsEx;">
+        <div class="name">
+          {{region.name}}
+        </div>
+        <div class="bar">
+          <div class="bar-line" [style.width.%]="region.percent">
+            {{region.avg | number}}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

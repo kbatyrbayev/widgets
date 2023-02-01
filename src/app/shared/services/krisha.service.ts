@@ -33,7 +33,7 @@ export class KrishaService {
   }
 
   getAnalytics(): Observable<IRegionInfo[]> {
-    return this.http.get<IRegion>('/analytics/').pipe(
+    return this.http.get<IRegion>('./assets/krisha.json').pipe(
       map(res => {
         let arr: IRegionInfo[] = [];
         for(let key in res) {
@@ -45,7 +45,7 @@ export class KrishaService {
             name: this.cities.get(+key) || ''
           });
         }
-        return arr;
+        return arr.filter(f => f.name);
       })
     );
   }

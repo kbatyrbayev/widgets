@@ -1,11 +1,11 @@
 {
-  "name": "gpn",
+  "name": "widgets",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config src/proxy.json",
     "startDrug": "ng serve drug-expertise --port=4201",
-    "build": "ng build",
+    "build": "ng build --base-href=/projects/widgets/ --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
