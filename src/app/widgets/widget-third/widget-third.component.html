@@ -1,5 +1,5 @@
 <div class="widget">
-  <app-widget-header [name]="'Analytics on apartment prices by Almaty by types of house'"></app-widget-header>
+  <app-widget-header [name]="'Analytics on apartment prices by regions in bar chart'"></app-widget-header>
   <div class="widget__body third-widget__body">
 
     <ng-container *ngIf="loading; else result">
@@ -13,7 +13,7 @@
           </div>
           <div class="bar">
             <div class="bar-line" [style.width.%]="region.percent">
-              <span class="animate__animated animate__flipInY">
+              <span class="animate__animated animate__bounceIn">
                 {{region.avg | number}}
               </span>
             </div>

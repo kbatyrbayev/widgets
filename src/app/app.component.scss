@@ -15,6 +15,6 @@ $value: calc(50% - 10px);
 
 @media (max-width: 767px) {
   .widgets {
-    grid-template: repeat(4, 500px) / 1fr;
+    grid-template: repeat(4, auto) / 1fr;
   }
 }
