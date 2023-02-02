@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {KrishaService} from "../../shared/services/krisha.service";
 import {IRegionInfo} from "../../shared/models/model";
 import gsap from "gsap";
+import {debounceTime, Subject} from "rxjs";
 
 @Component({
   selector: 'app-widget-second',
@@ -34,10 +35,19 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
 
   loading = true;
 
+  widgetParams = new Subject<any>();
+
   constructor(private service: KrishaService) {
   }
 
   ngOnInit(): void {
+    this.widgetParams
+      .pipe(
+        debounceTime(500)
+      )
+      .subscribe(_ => {
+        this.drawChart();
+      });
   }
 
   ngAfterViewInit() {
@@ -75,7 +85,7 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
 
     let base: number[][] = [];
     this.pointsEx.forEach(point => {
-      base.push([point[0], this.svgHeight-this.padding[1]*2]);
+      base.push([point[0], this.svgHeight - this.padding[1] * 2]);
     });
 
     this.polyline = base.join(', ');
@@ -176,6 +186,11 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
       date: point[2] + '',
       value: point[3]
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.widgetParams.next(event);
   }
 
 }
