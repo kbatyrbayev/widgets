@@ -20,4 +20,8 @@ svg {
   .tooltip {
     fill: rgba(102, 108, 255, 100%);
   }
+  .polyline {
+    animation: points 5s linear;
+    transition: all 3s ease-in-out;
+  }
 }

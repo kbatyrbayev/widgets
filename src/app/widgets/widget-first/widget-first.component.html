@@ -4,7 +4,7 @@
     <div class="loading" *ngIf="loading">loading</div>
     <ng-container *ngIf="!loading">
       <div class="cards cards--sm">
-        <div class="card" *ngFor="let card of cards">
+        <div class="card animate__animated animate__fadeInLeft" *ngFor="let card of cards">
           <div>{{card.name}}</div>
           <div>〒 {{card.avg | number}}</div>
         </div>

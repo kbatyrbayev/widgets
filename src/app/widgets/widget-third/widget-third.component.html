@@ -2,17 +2,25 @@
   <app-widget-header [name]="'Analytics on apartment prices by Almaty by types of house'"></app-widget-header>
   <div class="widget__body third-widget__body">
 
-    <div class="bar-chart" #barChart>
-      <div class="row" *ngFor="let region of regionsEx;">
-        <div class="name">
-          {{region.name}}
-        </div>
-        <div class="bar">
-          <div class="bar-line" [style.width.%]="region.percent">
-            {{region.avg | number}}
+    <ng-container *ngIf="loading; else result">
+      loading
+    </ng-container>
+    <ng-template #result>
+      <div class="bar-chart" #barChart>
+        <div class="row" *ngFor="let region of regionsEx;">
+          <div class="name animate__animated animate__flipInY">
+            {{region.name}}
+          </div>
+          <div class="bar">
+            <div class="bar-line" [style.width.%]="region.percent">
+              <span class="animate__animated animate__flipInY">
+                {{region.avg | number}}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+    </ng-template>
   </div>
 </div>

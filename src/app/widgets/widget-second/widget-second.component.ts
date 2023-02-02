@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {KrishaService} from "../../shared/services/krisha.service";
 import {IRegionInfo} from "../../shared/models/model";
+import gsap from "gsap";
 
 @Component({
   selector: 'app-widget-second',
@@ -29,23 +30,24 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
   pointsEx: number[][] = [];
   polyline: string = '';
   polygon: string = '';
-  tooltip:{x?: number, y?: number, date?: string, value?: number} = {}
+  tooltip: { x?: number, y?: number, date?: string, value?: number } = {}
+
+  loading = true;
 
   constructor(private service: KrishaService) {
   }
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit() {
     this.service.selectedRegion$.subscribe(res => {
       if (res.id) {
         this.region = res;
+        this.drawChart();
         setTimeout(() => {
-          this.drawChart();
-        }, 1000)
-
+          this.loading = false;
+        }, 500)
       }
     });
   }
@@ -59,19 +61,36 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
     /*create x axis*/
     this.xAxis = this.drawXAxis(x);
     this.svgWidth = this.svgChart.nativeElement.clientWidth;
-    this.xStep =  Math.round((this.svgWidth-this.padding[0]) / this.xAxis.length);
+    this.xStep = Math.round((this.svgWidth - this.padding[0]) / this.xAxis.length);
     /*create dots*/
     this.points = this.drawDots(x, y);
-    this.pointsEx = this.points.map(point => point.slice(0,2));
-    const lastPoint = this.points[this.points.length-1];
+    this.pointsEx = this.points.map(point => point.slice(0, 2));
+    const lastPoint = this.points[this.points.length - 1];
     this.tooltip = {
       x: lastPoint[0],
       y: lastPoint[1],
-      date: lastPoint[2]+'',
+      date: lastPoint[2] + '',
       value: lastPoint[3]
     }
-    this.polyline = this.pointsEx.map(point => point.join(',')).join(' ');
-    this.polygon = `${this.pointsEx[0][0]},${this.getY(this.minY)} ${this.polyline} ${this.pointsEx[this.pointsEx.length-1][0]},${this.getY(this.minY)}`;
+
+    let base: number[][] = [];
+    this.pointsEx.forEach(point => {
+      base.push([point[0], this.svgHeight-this.padding[1]*2]);
+    });
+
+    this.polyline = base.join(', ');
+
+    this.polygon = `${this.pointsEx[0][0]},${this.getY(this.minY)} ${base} ${this.pointsEx[this.pointsEx.length - 1][0]},${this.getY(this.minY)}`;
+
+    setTimeout(() => {
+      let tl = gsap.timeline()
+      tl.to("#polyline", {attr: {points: this.pointsEx}});
+
+      let tl2 = gsap.timeline();
+      let newPol = this.pointsEx.map(point => point.join(',')).join(' ');
+      tl2.to("#polygon", {attr: {points: `${this.pointsEx[0][0]},${this.getY(this.minY)} ${newPol} ${this.pointsEx[this.pointsEx.length - 1][0]},${this.getY(this.minY)}`}})
+    }, 1000);
+
     this.yAxisLast = this.yAxis.map(r => [r, this.getY(r)]);
   }
 
@@ -106,7 +125,7 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
 
   drawXAxis(x: string[]) {
     this.minX = getFirstDayOfMonth(x[0]).getTime();
-    this.maxX = getLastDayOfMonth(x[x.length-1]).getTime();
+    this.maxX = getLastDayOfMonth(x[x.length - 1]).getTime();
     return Array.from(new Set(x.map(r => getYearMonth(r))));
 
     function getYearMonth(date: string) {
@@ -119,15 +138,16 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
       const newDate = new Date(date);
       return new Date(newDate.getFullYear(), newDate.getMonth(), 1);
     }
+
     function getLastDayOfMonth(date: string) {
       const newDate = new Date(date);
-      return new Date(newDate.getFullYear(), newDate.getMonth()+1, 0);
+      return new Date(newDate.getFullYear(), newDate.getMonth() + 1, 0);
     }
   }
 
   drawDots(x: string[], y: number[]) {
     let points: any[][] = [];
-    for(let i = 0; i < x.length; i++) {
+    for (let i = 0; i < x.length; i++) {
       points.push([this.getX(new Date(x[i]).getTime()), this.getY(y[i]), x[i], y[i]]);
     }
     return points;
@@ -135,12 +155,12 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
 
   getX(value: number) {
     let svgWidth = this.svgWidth - this.padding[0];
-    return Math.round(svgWidth - (this.maxX-value) / (this.maxX - this.minX) * svgWidth);
+    return Math.round(svgWidth - (this.maxX - value) / (this.maxX - this.minX) * svgWidth);
   }
 
   getY(value: number) {
     const svgHeight = this.svgHeight - this.padding[0];
-    return Math.round((this.maxY-value) / (this.maxY-this.minY) * svgHeight);
+    return Math.round((this.maxY - value) / (this.maxY - this.minY) * svgHeight);
   }
 
   get regionName() {
@@ -153,7 +173,7 @@ export class WidgetSecondComponent implements OnInit, AfterViewInit {
     this.tooltip = {
       x: point[0],
       y: point[1],
-      date: point[2]+'',
+      date: point[2] + '',
       value: point[3]
     }
   }

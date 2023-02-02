@@ -24,7 +24,7 @@ export class WidgetFirstComponent implements OnInit {
         finalize(() => {
           setTimeout(() => {
             this.loading = false;
-          }, 1000)
+          }, 500)
         })
       )
       .subscribe(res => {

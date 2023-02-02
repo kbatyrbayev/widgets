@@ -26,12 +26,7 @@ text {
     fill: #3B8AC2;
   }
   text {
+    transition: all .3s ease-in-out;
     fill: #fff;
-  }
-}
-
-
-@media (max-width: 1460px) {
-  svg {
   }
 }
