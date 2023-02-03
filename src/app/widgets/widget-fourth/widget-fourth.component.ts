@@ -19,7 +19,7 @@ import {Component} from '@angular/core';
             The project was created solely to show my skills in front-end development, not to sale
           </p>
           <p>
-            Used technologies: Angular2+, scss, svg, api, rxjs, grid, pixso.
+            Used technologies: Angular2+, Scss, SVG, API, RxJS, Grid, Pixso.
           </p>
         </div>
       </div>
@@ -36,7 +36,10 @@ import {Component} from '@angular/core';
     .texts {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      gap: 2rem;
+      p {
+        line-height: 1.2rem;
+      }
     }
 
     a {
